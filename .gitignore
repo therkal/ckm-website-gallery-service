@@ -1,28 +1,11 @@
-# Created by https://www.toptal.com/developers/gitignore/api/java,macos,linux,windows,git,intellij,helm
-# Edit at https://www.toptal.com/developers/gitignore?templates=java,macos,linux,windows,git,intellij,helm
-
-### Git ###
-# Created by git for backups. To disable backups in Git:
-# $ git config --global mergetool.keepBackup false
-*.orig
-
-# Created by git when using merge tools for conflicts
-*.BACKUP.*
-*.BASE.*
-*.LOCAL.*
-*.REMOTE.*
-*_BACKUP_*.txt
-*_BASE_*.txt
-*_LOCAL_*.txt
-*_REMOTE_*.txt
-
-### Helm ###
-# Chart dependencies
-**/charts/*.tgz
+# Created by https://www.toptal.com/developers/gitignore/api/macos,windows,linux,java,intellij,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,linux,java,intellij,visualstudiocode
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+.idea
+.idea/*
 
 # User-specific stuff
 .idea/**/workspace.xml
@@ -60,7 +43,7 @@
 # .idea/modules.xml
 # .idea/*.iml
 # .idea/modules
-# *.iml
+*.iml
 # *.ipr
 
 # CMake
@@ -128,10 +111,6 @@ fabric.properties
 # CodeStream plugin
 # https://plugins.jetbrains.com/plugin/12206-codestream
 .idea/codestream.xml
-
-# Azure Toolkit for IntelliJ plugin
-# https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
-.idea/**/azureSettings.xml
 
 ### Java ###
 # Compiled class file
@@ -203,9 +182,26 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-### macOS Patch ###
-# iCloud generated files
-*.icloud
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+# Support for Project snippet scope
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -233,5 +229,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/java,macos,linux,windows,git,intellij,helm
+# End of https://www.toptal.com/developers/gitignore/api/macos,windows,linux,java,intellij,visualstudiocode
 
+# Services
+services/*/target
+services/*/*.iml
