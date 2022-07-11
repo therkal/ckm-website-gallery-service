@@ -1,4 +1,4 @@
-server.port: 8082
+server.port: 8081
 spring:
     application:
         name: ckm-gallery-service
@@ -13,5 +13,5 @@ spring:
 #        oauth2:
 #            resourceserver:
 #                jwt:
-#                    issuer-uri: http://${KEYCLOAK_HOST:localhost}:8180/auth/realms/8bm
-#                    jwk-set-uri: http://${KEYCLOAK_HOST:localhost}:8180/auth/realms/8bm/protocol/openid-connect/certs
+#                    issuer-uri: http://${KEYCLOAK_HOST:localhost}:8180/auth/realms/ckm
+#                    jwk-set-uri: http://${KEYCLOAK_HOST:localhost}:8180/auth/realms/ckm/protocol/openid-connect/certs
