@@ -1,6 +1,17 @@
 quarkus:
-    application:
-        name: ckm-gallery-service
-    http:
-        cors: true
-        port: 8081
+  datasource:
+    db-kind: mysql
+#    username: ckm
+#    password: ckm
+#    reactive:
+#      url: mysql://localhost:3306/ckm_gallery_service
+  live-reload:
+      instrumentation: true
+  application:
+      name: ckm-gallery-service
+  http:
+      cors: true
+      port: 8081
+  hibernate-orm:
+    database:
+      generation: update
