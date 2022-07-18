@@ -85,7 +85,7 @@ public class GalleryResourceTest {
     @Test
     public void shouldGetSpecificGallery() {
         given().when()
-                .get(getApiPath() + "/" + createdGallery.getId())
+                .get(getApiPath() + "/" + this.createdGallery.getId())
                 .then()
                 .statusCode(200)
                 .contentType(ContentType.JSON)
@@ -96,7 +96,7 @@ public class GalleryResourceTest {
     @Test
     public void shouldDeleteGallery() {
         given().when()
-                .delete(getApiPath() + "/" + createdGallery.getId())
+                .delete(getApiPath() + "/" + this.createdGallery.getId())
                 .then()
                 .statusCode(204);
     }
