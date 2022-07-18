@@ -1,6 +1,5 @@
 package io.kennethmartens.ckm.rest.v1.exception;
 
-import io.kennethmartens.ckm.rest.v1.RestExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.resteasy.reactive.RestResponse;
 import org.jboss.resteasy.reactive.server.ServerExceptionMapper;
@@ -46,8 +45,8 @@ public class RestExceptionHandler {
         );
     }
 
-    private io.kennethmartens.ckm.rest.v1.exception.RestExceptionResponse buildException(RestResponse.Status status, Integer statusCode, String message) {
-        return io.kennethmartens.ckm.rest.v1.exception.RestExceptionResponse.builder()
+    private RestExceptionResponse buildException(RestResponse.Status status, Integer statusCode, String message) {
+        return RestExceptionResponse.builder()
                 .status(status)
                 .statusCode(statusCode)
                 .timestamp(Instant.now())
