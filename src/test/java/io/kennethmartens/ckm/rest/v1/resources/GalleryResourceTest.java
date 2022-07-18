@@ -1,8 +1,10 @@
 package io.kennethmartens.ckm.rest.v1.resources;
 
 import io.kennethmartens.ckm.entities.Gallery;
+import io.kennethmartens.ckm.rest.v1.exception.RestExceptionResponse;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
+import org.jboss.resteasy.reactive.RestResponse;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -14,8 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class GalleryResourceTest {
 
     static final String BASE_PATH = "/api/v1";
-
-    protected Gallery createdGallery;
 
     @Test
     public void testGetEndpoint() {
@@ -45,26 +45,29 @@ public class GalleryResourceTest {
 
         assertEquals(title, returned.getTitle());
         assertNotNull(returned.getId());
-
-        createdGallery = returned;
     }
 
     @Test
-    public void shouldGetSpecificGallery() {
-        given().when()
-                .get(getApiPath() + "/" + createdGallery.getId())
-                .then()
-                .statusCode(200)
+    public void testPostEndpointDuplicateGallery() {
+        String title = "New Gallery";
+        Gallery gallery = Gallery.builder()
+                .title(title)
+                .build();
+
+        RestExceptionResponse restExceptionResponse = given().when()
                 .contentType(ContentType.JSON)
-                .body(is(createdGallery));
-    }
-
-    @Test
-    public void shouldDeleteGallery() {
-        given().when()
-                .delete(getApiPath() + "/" + createdGallery.getId())
+                .body(gallery)
+                .post(getApiPath())
                 .then()
-                .statusCode(204);
+                .statusCode(409)
+                .extract()
+                .as(RestExceptionResponse.class);
+
+        assertNotNull(restExceptionResponse);
+        assertNotNull(restExceptionResponse.getTimestamp());
+        assertEquals(409, restExceptionResponse.getStatusCode());
+        assertEquals(RestResponse.Status.CONFLICT, restExceptionResponse.getStatus());
+        assertEquals("Gallery with title New Gallery exists", restExceptionResponse.getMessage());
     }
 
     private String getApiPath() {
