@@ -5,18 +5,25 @@ import io.kennethmartens.ckm.rest.v1.exception.RestExceptionResponse;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import org.jboss.resteasy.reactive.RestResponse;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @QuarkusTest
 public class GalleryResourceTest {
 
     static final String BASE_PATH = "/api/v1";
 
+    protected Gallery createdGallery;
+
+    @Order(0)
     @Test
     public void testGetEndpoint() {
         given()
@@ -26,6 +33,7 @@ public class GalleryResourceTest {
                 .body(is("[]"));
     }
 
+    @Order(1)
     @Test
     public void testPostEndpointSuccessfulCreation() {
         String title = "New Gallery";
@@ -45,8 +53,11 @@ public class GalleryResourceTest {
 
         assertEquals(title, returned.getTitle());
         assertNotNull(returned.getId());
+
+        this.createdGallery = returned;
     }
 
+    @Order(2)
     @Test
     public void testPostEndpointDuplicateGallery() {
         String title = "New Gallery";
@@ -69,6 +80,27 @@ public class GalleryResourceTest {
         assertEquals(RestResponse.Status.CONFLICT, restExceptionResponse.getStatus());
         assertEquals("Gallery with title New Gallery exists", restExceptionResponse.getMessage());
     }
+
+    @Order(3)
+    @Test
+    public void shouldGetSpecificGallery() {
+        given().when()
+                .get(getApiPath() + "/" + createdGallery.getId())
+                .then()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .body(is(createdGallery));
+    }
+
+    @Order(4)
+    @Test
+    public void shouldDeleteGallery() {
+        given().when()
+                .delete(getApiPath() + "/" + createdGallery.getId())
+                .then()
+                .statusCode(204);
+    }
+
 
     private String getApiPath() {
         return BASE_PATH + GalleryResource.API_GALLERIES;
