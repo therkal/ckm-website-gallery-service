@@ -81,27 +81,6 @@ public class GalleryResourceTest {
         assertEquals("Gallery with title New Gallery exists", restExceptionResponse.getMessage());
     }
 
-    @Order(3)
-    @Test
-    public void shouldGetSpecificGallery() {
-        given().when()
-                .get(getApiPath() + "/" + this.createdGallery.getId())
-                .then()
-                .statusCode(200)
-                .contentType(ContentType.JSON)
-                .body(is(createdGallery));
-    }
-
-    @Order(4)
-    @Test
-    public void shouldDeleteGallery() {
-        given().when()
-                .delete(getApiPath() + "/" + this.createdGallery.getId())
-                .then()
-                .statusCode(204);
-    }
-
-
     private String getApiPath() {
         return BASE_PATH + GalleryResource.API_GALLERIES;
     }
